@@ -96,6 +96,7 @@
         </div>
         <div>
           <input type="submit" value="prenota" />
+          <input type="cancel" value="annulla" @click="undo" />
         </div>
       </fieldset>
     </form>
@@ -163,6 +164,9 @@ export default {
           console.error("Error updating document: ", error);
         });
       }
+    },
+    undo: function () {
+      this.$emit('closeEvent')
     },
     // check or uncheck all
     checkAll: function (event) {
@@ -449,11 +453,28 @@ header h1 {
   resize: vertical;
   overflow: auto;
 }
+.vue-form input[type="cancel"] {
+  border: none;
+  background: #e93232;
+  border-radius: 0.25em;
+  padding: 10px;
+  margin-right: 10px;
+  width: 100px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .vue-form input[type="submit"] {
   border: none;
   background: #2ac432;
   border-radius: 0.25em;
   padding: 10px;
+  width: 100px;
+  text-align: center;
   color: #ffffff;
   font-weight: bold;
   float: right;
@@ -462,14 +483,17 @@ header h1 {
   -moz-osx-font-smoothing: grayscale;
   appearance: none;
 }
-.no-touch .vue-form input[type="submit"]:hover {
-  background: #42a2e1;
+.vue-form input[type="submit"]:hover {
+  background: #05690a;
 }
 .vue-form input[type="submit"]:focus {
   outline: none;
   background: #2b3e51;
 }
 .vue-form input[type="submit"]:active {
+  transform: scale(0.9);
+}
+.vue-form input[type="cancel"]:active {
   transform: scale(0.9);
 }
 .vue-form .error-message {

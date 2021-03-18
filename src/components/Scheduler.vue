@@ -1,5 +1,6 @@
 <template>
 <div>
+  <!--
     <b-modal size="xl" v-model="bookingEdit" ref="bookingModal" title="Prenotazione">
       <booking-form
         :start="rangeStart"
@@ -12,7 +13,19 @@
       <span>&nbsp;</span>
       </template>
     </b-modal>
-  <DayPilotScheduler id="dp" :config="config" ref="scheduler" />
+    -->
+    <div class='booking-form' v-if="bookingEdit">
+      <booking-form
+        :start="rangeStart"
+        :end="rangeEnd"
+        :room='selectedRoom'
+        :bookId='bookId'
+        @closeEvent="closeBookingForm">
+      </booking-form>
+    </div>
+    <div v-else>
+      <DayPilotScheduler id="dp" :config="config" ref="scheduler" />
+    </div>
 </div>
 </template>
 
@@ -127,8 +140,8 @@ export default {
   },
   methods: {
     closeBookingForm: function() {
-      this.$refs['bookingModal'].hide()
-      this.scheduler.clearSelection()
+      this.bookingEdit = false
+      //this.scheduler.clearSelection()
     },
     editBooking: function (id) {
       this.bookId = id
@@ -223,3 +236,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.booking-form {
+  width: 100%;
+}
+</style>
